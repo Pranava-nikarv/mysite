@@ -1,4 +1,8 @@
 .accordion {
+    border: none;
+    background: none;
+}
+.accordion > div {
     background: #EFEFEF;
     border: 1px solid #dddddd;
     border-radius: 6px;
