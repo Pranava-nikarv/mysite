@@ -1,20 +1,18 @@
-function decorateAccordion(el) {
-  const titles = el.querySelectorAll(':scope > div:nth-child(odd)');
+export default function decorate(block) {
+  // each accordion item = one title row followed by one content row
+  const titles = block.querySelectorAll(':scope > div:nth-child(odd)');
   titles.forEach((title) => {
-    // Add a class to the title container
+    // add a class to the title row
     title.classList.add('item-title');
-    // Remove the empty div
-    title.querySelector(':scope > div:last-of-type').remove();
-    // Add a class to the content
-    title.nextElementSibling.classList.add('item-content');
-    // Add a click handler to open the content
+    // remove the extra (empty) cell inside the title row
+    const empty = title.querySelector(':scope > div:last-of-type');
+    if (empty) empty.remove();
+    // add a class to the content row
+    const content = title.nextElementSibling;
+    if (content) content.classList.add('item-content');
+    // toggle open/close on click
     title.addEventListener('click', () => {
       title.classList.toggle('open');
     });
   });
 }
-
-const els = document.querySelectorAll('.accordion');
-els.forEach((el) => {
-  decorateAccordion(el);
-});
