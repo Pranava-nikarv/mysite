@@ -1,15 +1,11 @@
 export default function decorate(block) {
-  // each accordion item = one title row followed by one content row
-  const titles = block.querySelectorAll(':scope > div:nth-child(odd)');
-  titles.forEach((title) => {
-    // add a class to the title row
+  // each row is one accordion item: first cell = title, second cell = content
+  [...block.children].forEach((row) => {
+    const title = row.firstElementChild;
+    const content = row.lastElementChild;
+    if (!title) return;
     title.classList.add('item-title');
-    // remove the extra (empty) cell inside the title row
-    const empty = title.querySelector(':scope > div:last-of-type');
-    if (empty) empty.remove();
-    // add a class to the content row
-    const content = title.nextElementSibling;
-    if (content) content.classList.add('item-content');
+    if (content && content !== title) content.classList.add('item-content');
     // toggle open/close on click
     title.addEventListener('click', () => {
       title.classList.toggle('open');
