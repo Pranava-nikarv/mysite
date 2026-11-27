@@ -43,12 +43,29 @@
 
 .accordion .item-content {
     display: none;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 16px;
     padding: 12px 12px 12px 24px;
     border-bottom: 1px solid #dddddd;
 }
 
 .accordion .item-title.open + .item-content {
     display: grid;
+}
+
+/* image left, text right when the content cell has an image */
+.accordion .item-content.has-media {
+    grid-template-columns: minmax(200px, 40%) 1fr;
+    align-items: start;
+}
+
+.accordion .item-content.has-media .item-image img {
+    width: 100%;
+    display: block;
+    border-radius: 4px;
+}
+
+@media (width < 600px) {
+    .accordion .item-content.has-media {
+        grid-template-columns: 1fr;
+    }
 }
