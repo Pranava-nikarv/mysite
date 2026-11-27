@@ -13,15 +13,19 @@ export default function decorate(block) {
         content.classList.add('has-media');
         const imageCol = document.createElement('div');
         imageCol.classList.add('item-image');
-        const imagePara = picture.closest('p');
-        (imagePara ?? picture).before(imageCol);
-        imageCol.append(imagePara ?? picture);
         const textCol = document.createElement('div');
         textCol.classList.add('item-text');
-        imageCol.after(textCol);
+        // move only the picture, so text sharing its paragraph stays behind
+        imageCol.append(picture);
+        content.prepend(imageCol);
+        content.append(textCol);
         // move everything else into the text column
         [...content.children].forEach((child) => {
           if (child !== imageCol && child !== textCol) textCol.append(child);
+        });
+        // drop paragraphs left empty by the move
+        content.querySelectorAll('p').forEach((p) => {
+          if (!p.textContent.trim() && !p.querySelector('picture, img')) p.remove();
         });
       }
     }
